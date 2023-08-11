@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import log_loss
+from sklearn.metrics import log_loss, confusion_matrix
 
 # Cargar el conjunto de datos Iris
 iris = datasets.load_iris()
@@ -38,4 +39,20 @@ plt.axhline(test_loss_value, color='red', linestyle='--', label='Test loss after
 plt.xlabel('Iterations')
 plt.ylabel('Loss')
 plt.legend()
+plt.show()
+
+# Matriz de confusión
+y_test_pred = mlp.predict(X_test_scaled)
+cm = confusion_matrix(y_test, y_test_pred)
+
+# Imprimir matriz de confusión
+print("Matriz de Confusión:")
+print(cm)
+
+# Visualizar matriz de confusión
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, cmap="YlGnBu", xticklabels=iris.target_names, yticklabels=iris.target_names)
+plt.xlabel('Predicted')
+plt.ylabel('True')
+plt.title('Confusion Matrix')
 plt.show()
